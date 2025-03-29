@@ -22,10 +22,14 @@ To contribute a theme, please submit a pull request.
 The `template` folder contains a template theme file.
 Each of these files should be edited to supply your theme.
 
+- `readme.md`: This should contain a short description of the theme. If there is any necessary attribution, please include details here.
+- `template.yaml`: This should set any YAML options to be used in Quarto.
+- `template.typ`: This should include any relevant Typst code to set up your theme. This includes copies of default definitions. Please remove those if you do not want to edit them.
+- `LICENSE`: This should contain any necessary license details. Notably, adopting themes from Tex or other Typst templates may require attribution in this. If possible, I recommend using the MIT-0 license for themes of this kind.
 
 ### Details of the `.yaml` file
 
-This template includes several custom arguments that can be supplied in the YAML header.
+`projector` includes several custom arguments that can be supplied in the YAML header.
 
 - `mainfont`: sets font (see options with `quarto typst fonts`)
 - `margin`: sets page margins
@@ -33,8 +37,10 @@ This template includes several custom arguments that can be supplied in the YAML
 - `toc`: whether to display the table of contents
 - `toc_title`: title of the table of contents
 - `background-image`: the path to an image to put as the background
-- `handout`: display as a handout, removing incremental animations
 - `theme`: a file name containing your customizations
+
+These arguments take precedence over any settings in the `.typ` file.
+All `.yaml` files should contain a `theme` argument at a minimum.
 
 ### Details of the `.typ` file
 
