@@ -1,5 +1,7 @@
 # `metropolis` theme for `projector`
 
+![](metropolis.png)
+
 This is a clean and bright theme, derivative of [`mtheme`](https://bloerg.net/posts/a-modern-beamer-theme/) via [`polylux-typ/metropolis`](https://github.com/polylux-typ/metropolis).
 It uses various Fira fonts to give a modern look, along with heavy use of white space and horizon alignment.
 
