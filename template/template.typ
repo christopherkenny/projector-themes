@@ -13,11 +13,11 @@
   doc
 }
 
-// optional:
-// #import "@preview/polylux:0.3.1": *
+// required if setting any custom slide styles below:
+#import "@preview/polylux:0.4.0": *
 
 #let title-slide(title, subtitle, authors, date) = {
-  polylux-slide[
+  slide[
     #if title != none {
       align(center)[
         #block(inset: 1em)[
@@ -56,7 +56,7 @@
 }
 
 #let toc-slide(toc_title) = {
-  polylux-slide[
+  slide[
     #let title = if toc_title == none {
       auto
     } else {
@@ -64,21 +64,23 @@
     }
     #heading(toc_title)
     #set text(size: 2em)
-    // TODO 0.13 update to use new toolbox version
     #align(horizon)[
-      #polylux-outline()
+      #toolbox.all-sections((sections, current) => {
+        sections
+        .map(s => if s == current { emph(s) } else { s })
+        .join([ #linebreak() ])
+      })
     ]
   ]
 }
 
-// TODO 0.13 update to slide
 #let section-slide(name) = {
-  polylux-slide[
-    #set align(horizon)
-    #set text(size: 4em)
-    // TODO 0.13 update to #toolbox.register-section
-    #utils.register-section(name)
+  slide[
+    #align(horizon)[
+      #set text(size: 4em)
+      #toolbox.register-section(name)
 
-    #strong(name)
+      #strong(name)
+    ]
   ]
 }
