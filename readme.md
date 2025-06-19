@@ -27,6 +27,43 @@ Each of these files should be edited to supply your theme.
 - `template.typ`: This should include any relevant Typst code to set up your theme. This includes copies of default definitions. Please remove those if you do not want to edit them.
 - `LICENSE`: This should contain any necessary license details. Notably, adopting themes from Tex or other Typst templates may require attribution in this. If possible, I recommend using the MIT-0 license for themes of this kind.
 
+Then a thumbnail should be included. To create one:
+
+1. Render the `template.qmd` with your theme.
+2. Create a png with dpi = 150 version of the first six slides in the order:
+
+```
+1 2
+3 4
+5 6
+```
+
+An R function to do this is:
+
+```r
+generate_thumbnail <- function(theme, pdf_file = 'template.pdf', dpi = 150) {
+  if (missing(theme)) {
+    stop('`theme` must be provided. e.g. `"metropolis"`.')
+  }
+  pages <- lapply(1:6, function(i) {
+    pdftools::pdf_render_page(pdf_file, page = i, dpi = 150) |>
+    magick::image_read()
+  })
+
+  thumbnail <- magick::image_append(
+    c(
+      magick::image_append(c(pages[[1]], pages[[3]], pages[[5]]), stack = TRUE),
+      magick::image_append(c(pages[[2]], pages[[4]], pages[[6]]), stack = TRUE)
+    )
+  )
+
+  magick::image_write(thumbnail, path = paste0(theme, '.png'), density = 150)
+}
+
+```
+
+
+
 ### Details of the `.yaml` file
 
 `projector` includes several custom arguments that can be supplied in the YAML header.
