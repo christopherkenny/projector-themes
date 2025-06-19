@@ -1,5 +1,7 @@
 # `cousteau` theme for `projector`
 
+![](cousteau.png)
+
 This provides a minimalistic and nautically-colored theme for `projector`, based on [Matt Blackwell's cousteau theme for Beamer](https://github.com/mattblackwell/cousteau). It uses Fira Sans, Fira Mono, and Latin Modern Math to give a modern sans serif look.
 
 This theme provides a custom slide theming with black text on light blue and light blue on dark blue. This includes a simple custom title, TOC, and section slide formats using shades of blue.
