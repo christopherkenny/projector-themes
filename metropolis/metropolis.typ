@@ -10,12 +10,8 @@
 
 // Theme setup function with default fonts and sizes:contentReference[oaicite:1]{index=1}
 #let projector-theme(doc) = {
-  let math-font = "Fira Math"
-  let code-font = "Fira Code"
 
   set text(weight: "light")
-  show math.equation: set text(font: math-font)
-  show raw: set text(font: code-font)
 
   let slide-title-header = toolbox.next-heading(h => {
     show: toolbox.full-width-block.with(fill: text.fill, inset: 1em)

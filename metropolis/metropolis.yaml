@@ -1,3 +1,6 @@
+theme: metropolis
 mainfont: Fira Sans
+codefont: Fira Code
+mathfont: Fira Math
 fontsize: 16pt
 toc-title: "Agenda"
