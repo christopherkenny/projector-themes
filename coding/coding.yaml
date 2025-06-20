@@ -1,0 +1,5 @@
+theme: coding.typ
+mainfont: "Monaspace Argon"
+codefont: "Monaspace Krypton"
+mathfont: "Monaspace Neon"
+fontsize: 16pt
