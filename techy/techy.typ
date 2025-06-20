@@ -20,7 +20,7 @@
 
 #let projector-theme(doc) = {
 
-  set text(size: 16pt, fill: rgb("#111111"))
+  set text(fill: rgb("#111111"))
 
   let highlight = (content) => {
     set text(fill: accent1)
@@ -43,13 +43,13 @@
 #let title-slide(title, subtitle, authors, date) = slide[
   #set align(left + horizon)
   // Title text (large, bold)
-  #text(font: title-font, size: 36pt, weight: "bold")[
+  #text(font: title-font, size: 2em, weight: "bold")[
     #title
   ]
 
   // Subtitle, if present
   #if (subtitle != none and subtitle != "") {
-    text(size: 20pt, fill: accent2)[
+    text(size: 1.5em, fill: accent2)[
       #subtitle
     ]
   }
@@ -59,14 +59,14 @@
 
   // Authors line, if any
   #if (authors != none and authors != ()) {
-    text(size: 18pt)[
+    text(size: 1.25em)[#read("../../../../../../1em")
       #authors.map(author => author.name).join(", ", last: " and ")
     ]
   }
 
   // Date line, if any
   #if (date != none and date != "") {
-    text(size: 18pt)[ #date ]
+    text(size: 1em)[ #date ]
   }
 ]
 
@@ -86,7 +86,7 @@
   #set text(fill: white)
 
   #set align(center + horizon)
-  #text(font: title-font, size: 40pt, weight: "semibold")[
+  #text(font: title-font, size: 2.5em, weight: "semibold")[
     #name
   ]
   #toolbox.register-section(name)  // register for TOC
