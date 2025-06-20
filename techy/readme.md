@@ -1,5 +1,7 @@
 # `techy` theme for `projector`
 
+![](techy.png)
+
 This provides a simple neon, futuristic template.
 It features a boxy characters for titles, with darker green section slides.
 

@@ -1,4 +1,4 @@
-# Themes for `projector` <img src='projector.png' align="right" height="150" />
+# Themes for `projector` <img src='https://raw.githubusercontent.com/christopherkenny/projector/refs/heads/main/projector.png' align="right" height="150" />
 
 [`projector`](https://github.com/christopherkenny/projector) is a Quarto extension for making slides with [polylux](https://github.com/andreasKroepelin/polylux).
 The design of the extension does not make it compatible with Polylux's design templates.
@@ -7,8 +7,13 @@ However, styling can be done (relatively) easily through the `theme` YAML option
 This repo contains several themes for `projector`.
 Currently supported themes are listed below:
 
-| theme | description |
-| ----- | ----------- |
+| theme      | description |
+| ---------- | ----------- |
+| cousteau   | A blue, nautical theme based on [`mattblackwell/cousteau`](https://github.com/mattblackwell/cousteau) for beamer |
+| darker     | A dark theme with compact sans serif fonts  |
+| friendly   | A theme with whimsy based on [`polylux-typ/friendly`](https://github.com/polylux-typ/friendly) |
+| metropolis | A modern theme based on [`polylux-typ/metropolis`](https://github.com/polylux-typ/metropolis) and a [beamer template of the same name](https://github.com/matze/mtheme) |
+| techy      | A bright, futuristic theme overusing monospace sans serif fonts |
 
 ## Using a template
 
