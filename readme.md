@@ -11,8 +11,8 @@ Currently supported themes are listed below:
 | ---------- | ----------- |
 | cousteau   | A blue, nautical theme based on [`mattblackwell/cousteau`](https://github.com/mattblackwell/cousteau) for beamer |
 | darker     | A dark theme with compact sans serif fonts  |
-| friendly   | A theme with whimsy based on [`polylux-typ/friendly`] |
-| metropolis | A modern theme based on [`polylux-typ/metropolis`] and a beamer template of the same name |
+| friendly   | A theme with whimsy based on [`polylux-typ/friendly`](https://github.com/polylux-typ/friendly) |
+| metropolis | A modern theme based on [`polylux-typ/metropolis`](https://github.com/polylux-typ/metropolis) and a [beamer template of the same name](https://github.com/matze/mtheme) |
 | techy      | A bright, futuristic theme overusing monospace sans serif fonts |
 
 ## Using a template
