@@ -1,4 +1,4 @@
-# Themes for `projector` <img src='projector.png' align="right" height="150" />
+# Themes for `projector` <img src='https://raw.githubusercontent.com/christopherkenny/projector/refs/heads/main/projector.png' align="right" height="150" />
 
 [`projector`](https://github.com/christopherkenny/projector) is a Quarto extension for making slides with [polylux](https://github.com/andreasKroepelin/polylux).
 The design of the extension does not make it compatible with Polylux's design templates.
