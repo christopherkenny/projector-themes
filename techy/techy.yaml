@@ -1,0 +1,6 @@
+theme: techy.typ
+mainfont: Titillium Web
+codefont: Roboto Mono
+mathfont: Noto Sans
+fontsize: 14pt
+toc-title: "Objectives"
