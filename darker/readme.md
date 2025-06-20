@@ -1,6 +1,6 @@
-# `techy` theme for `projector`
+# `darker` theme for `projector`
 
-![](techy.png)
+![](darker.png)
 
 This provides a simple dark theme.
 It is compact and uses sans serif fonts.
