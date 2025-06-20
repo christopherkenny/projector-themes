@@ -7,8 +7,13 @@ However, styling can be done (relatively) easily through the `theme` YAML option
 This repo contains several themes for `projector`.
 Currently supported themes are listed below:
 
-| theme | description |
-| ----- | ----------- |
+| theme      | description |
+| ---------- | ----------- |
+| cousteau   | A blue, nautical theme based on [`mattblackwell/cousteau`](https://github.com/mattblackwell/cousteau) for beamer |
+| darker     | A dark theme with compact sans serif fonts  |
+| friendly   | A theme with whimsy based on [`polylux-typ/friendly`] |
+| metropolis | A modern theme based on [`polylux-typ/metropolis`] and a beamer template of the same name |
+| techy      | A bright, futuristic theme overusing monospace sans serif fonts |
 
 ## Using a template
 
