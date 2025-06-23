@@ -9,6 +9,7 @@ Currently supported themes are listed below:
 
 | theme      | description |
 | ---------- | ----------- |
+| coding     | A minimal theme using [GitHub Monaspace](https://github.com/githubnext/monaspace) fonts |
 | cousteau   | A blue, nautical theme based on [`mattblackwell/cousteau`](https://github.com/mattblackwell/cousteau) for beamer |
 | darker     | A dark theme with compact sans serif fonts  |
 | friendly   | A theme with whimsy based on [`polylux-typ/friendly`](https://github.com/polylux-typ/friendly) |
