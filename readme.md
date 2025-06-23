@@ -15,6 +15,7 @@ Currently supported themes are listed below:
 | friendly   | A theme with whimsy based on [`polylux-typ/friendly`](https://github.com/polylux-typ/friendly) |
 | metropolis | A modern theme based on [`polylux-typ/metropolis`](https://github.com/polylux-typ/metropolis) and a [beamer template of the same name](https://github.com/matze/mtheme) |
 | techy      | A bright, futuristic theme overusing monospace sans serif fonts |
+| university | A professional, academic theme allowing for two color accents based on [`polylux-typ/polylux`'s university theme](https://github.com/polylux-typ/polylux) |
 
 ## Using a template
 
