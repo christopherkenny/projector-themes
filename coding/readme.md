@@ -1,5 +1,7 @@
 # `coding` theme for `projector`
 
+![](coding.png)
+
 This provides a minimalist theme using GitHub Monaspace fonts.
 It is very simple, using mostly black text on white backgrounds.
 
