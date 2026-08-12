@@ -59,7 +59,7 @@
 
   // Authors line, if any
   #if (authors != none and authors != ()) {
-    text(size: 1.25em)[#read("../../../../../../1em")
+    text(size: 1.25em)[
       #authors.map(author => author.name).join(", ", last: " and ")
     ]
   }
