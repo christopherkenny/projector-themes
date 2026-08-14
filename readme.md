@@ -1,8 +1,7 @@
 # Themes for `projector` <img src='https://raw.githubusercontent.com/christopherkenny/projector/refs/heads/main/projector.png' align="right" height="150" />
 
-[`projector`](https://github.com/christopherkenny/projector) is a Quarto extension for making slides with interchangeable Typst backends, including [Polylux](https://github.com/andreasKroepelin/polylux) and Touying.
-The design of the extension does not make it compatible with Polylux's design templates.
-However, styling can be done (relatively) easily through the `theme` YAML option.
+[`projector`](https://github.com/christopherkenny/projector) is a Quarto extension for making slides with interchangeable Typst backends, including [Polylux](https://github.com/andreasKroepelin/polylux) and [Touying](https://github.com/touying-typ/touying).
+The themes in this repository work with any projector backend.
 
 This repo contains several themes for `projector`.
 Currently supported themes are listed below:
@@ -20,8 +19,11 @@ Currently supported themes are listed below:
 ## Using a template
 
 Each template comes with a pair of files necessary to use the theme.
-The `*.yaml` will contain any settings that should be used in the YAML of your Quarto file.
-The `*.typ` file should be placed in the directory of your Quarto file and then added to the `theme` YAML argument in the Quarto file.
+The `*.yaml` file contains settings to copy into the YAML front matter of your Quarto file.
+The `*.typ` file contains the theme and must be available at the path supplied to `theme`.
+
+For example, to use the `metropolis` theme, copy `metropolis/metropolis.typ`
+next to your `.qmd` file and merge the settings from `metropolis/metropolis.yaml`.
 
 ## Contributing a theme
 
@@ -76,29 +78,31 @@ generate_thumbnail <- function(theme, pdf_file = 'template.pdf', dpi = 150) {
 `projector` includes several custom arguments that can be supplied in the YAML header.
 
 - `mainfont`: sets font (see options with `quarto typst fonts`)
+- `codefont`: sets the font used for code
+- `mathfont`: sets the font used for math
+- `fontsize`: sets the base font size
 - `margin`: sets page margins
 - `papersize`: the paper size to use (choices listed [here](https://typst.app/docs/reference/layout/page/))
 - `toc`: whether to display the table of contents
-- `toc_title`: title of the table of contents
+- `toc-title`: title of the table of contents
 - `background-image`: the path to an image to put as the background
 - `theme`: a file name containing your customizations
-- `backend`: the slide backend (`polylux` or `touying`)
 
 These arguments take precedence over any settings in the `.typ` file.
 All `.yaml` files should contain a `theme` argument at a minimum.
 
 ### Details of the `.typ` file
 
-Within the `.typ` file, you should include all of your styling choices within a function called `projector-theme(api, doc)`. The `api` record supplies the selected backend's slide functions and toolbox, so themes do not need backend-specific imports.
+Within the `.typ` file, you should include all of your styling choices within a function called `projector-theme(api, doc)`.
+The `api` record supplies the selected backend's slide functions and toolbox, so themes do not need backend-specific imports.
 Any styling choices should be applied within the function.
 The file may contain any valid Typst code, including using other packages available on [Typst Universe](https://typst.app/universe/).
-The contents of the file will be dropped into the template verbatim.
-The current definitions file imports `fontawesome` by default and supplies the backend-neutral `api` record.
+The file is imported as a Typst module.
 
 In Typst syntax, the style will be applied as follows:
 
 ```typst
-show: projector-theme.with(api)
+#show: projector-theme.with(api)
 ```
 
 If `theme` is set in the YAML, this line will be run so it must include a definition for `projector-theme(api, doc)`.
@@ -109,6 +113,24 @@ Later definitions take precedence, so you will see no changes, but it will *sile
 
 To modify the title, TOC, or section slides, you need to adjust them in your template file.
 Redefine the functions that produce them with your own version.
+
+For example, use the backend-neutral `api` functions like this:
+
+```typst
+#let section-slide(api, name) = (api.slide)[
+  #(api.toolbox.register-section)(name)
+  #name
+]
+
+#let toc-slide(api, toc_title) = (api.slide)[
+  #(api.toolbox.all-sections)((sections, current) => {
+    enum(..sections)
+  })
+]
+```
+
+The main slide functions available through `api` include `slide`, `focus-slide`, `last-slide`, `pause`, `item-by-item`, `slide-number`, `later`, and `speaker-note`.
+The `api.toolbox` record also includes helpers such as `register-section`, `all-sections`, `progress-ratio`, `full-width-block`, `next-heading`, and `slide-number`.
 
 The function signatures should be as follows:
 
@@ -124,12 +146,4 @@ You do not need to use the arguments to these functions, but the signatures must
 The `toc-slide` function can use `api.toolbox.all-sections` for a backend-neutral outline.
 The `section-slide` function can use `api.toolbox.register-section(name)` to register the section.
 
-Finally, if you just want to change the title, toc, or section slides, you can use a call to `projector-theme` that is empty.
-Specifically, include the following:
-
-```typst
-projector-theme(api, doc) = {
-  doc
-}
-```
-The function must be present, but it doesn't have to do anything.
+Finally, if you only want to change the title, toc, or section slides, you do not need to provide a new definition of `projector-theme`.
