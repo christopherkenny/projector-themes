@@ -1,6 +1,6 @@
 # Themes for `projector` <img src='https://raw.githubusercontent.com/christopherkenny/projector/refs/heads/main/projector.png' align="right" height="150" />
 
-[`projector`](https://github.com/christopherkenny/projector) is a Quarto extension for making slides with [polylux](https://github.com/andreasKroepelin/polylux).
+[`projector`](https://github.com/christopherkenny/projector) is a Quarto extension for making slides with interchangeable Typst backends, including [Polylux](https://github.com/andreasKroepelin/polylux) and Touying.
 The design of the extension does not make it compatible with Polylux's design templates.
 However, styling can be done (relatively) easily through the `theme` YAML option.
 
@@ -82,25 +82,26 @@ generate_thumbnail <- function(theme, pdf_file = 'template.pdf', dpi = 150) {
 - `toc_title`: title of the table of contents
 - `background-image`: the path to an image to put as the background
 - `theme`: a file name containing your customizations
+- `backend`: the slide backend (`polylux` or `touying`)
 
 These arguments take precedence over any settings in the `.typ` file.
 All `.yaml` files should contain a `theme` argument at a minimum.
 
 ### Details of the `.typ` file
 
-Within the `.typ` file, you should include all of your styling choices within a function called `projector-theme(doc)`.
+Within the `.typ` file, you should include all of your styling choices within a function called `projector-theme(api, doc)`. The `api` record supplies the selected backend's slide functions and toolbox, so themes do not need backend-specific imports.
 Any styling choices should be applied within the function.
 The file may contain any valid Typst code, including using other packages available on [Typst Universe](https://typst.app/universe/).
 The contents of the file will be dropped into the template verbatim.
-The current definitions file imports `polylux` and `fontawesome`by default.
+The current definitions file imports `fontawesome` by default and supplies the backend-neutral `api` record.
 
 In Typst syntax, the style will be applied as follows:
 
 ```typst
-show: projector-theme
+show: projector-theme.with(api)
 ```
 
-If `theme` is set in the YAML, this line will be run so it must include a definition for `projector-theme(doc)`.
+If `theme` is set in the YAML, this line will be run so it must include a definition for `projector-theme(api, doc)`.
 
 Further, all YAML options are applied *after* the theme file is used.
 As such, if you want to edit things controlled by the YAML, such as the font, you *must* do this via the YAML, not by the `.typ` file.
@@ -111,23 +112,23 @@ Redefine the functions that produce them with your own version.
 
 The function signatures should be as follows:
 
-- `title-slide(title, subtitle, authors, date)`
-- `toc-slide(toc_title)`
-- `section-slide(name)`
+- `title-slide(api, title, subtitle, authors, date)`
+- `toc-slide(api, toc_title)`
+- `section-slide(api, name)`
 
-Each of these slide calls should return a slide, via a call to `polylux-slide[]`.
+Each of these slide calls should return a slide, via a call to `(api.slide)[...]`.
 The one exception is if you want it to *not* do anything.
 For example, if you don't want a section slide, then return `{}`.
 You do not need to use the arguments to these functions, but the signatures must match exactly or you'll get a compilation error.
 
-The `toc-slide` function should contain a call to `#polylux-outline()` if you want the default outline included.
-The `section-slide` function should contain a call to`#utils.register-section(name)` to register the section.
+The `toc-slide` function can use `api.toolbox.all-sections` for a backend-neutral outline.
+The `section-slide` function can use `api.toolbox.register-section(name)` to register the section.
 
 Finally, if you just want to change the title, toc, or section slides, you can use a call to `projector-theme` that is empty.
 Specifically, include the following:
 
 ```typst
-projector-theme(doc) = {
+projector-theme(api, doc) = {
   doc
 }
 ```

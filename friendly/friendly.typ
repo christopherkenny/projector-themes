@@ -2,8 +2,6 @@
 // Based on: https://github.com/polylux-typ/friendly (MIT License)
 // Adapted by Christopher T. Kenny, 2025
 
-#import "@preview/polylux:0.4.0": *
-
 #let accent1 = rgb("#637A9F")
 #let accent2 = rgb("#E8C872")
 #let accent3 = rgb("#80B9AD")
@@ -12,7 +10,7 @@
 
 #let logo = none //ex: "projector.png"
 
-#let projector-theme(doc) = {
+#let projector-theme(api, doc) = {
 
   set page(
     fill: bg-color,
@@ -20,7 +18,7 @@
       set align(top + right)
       set text(fill: gray)
       h(1fr)
-      toolbox.slide-number
+      api.toolbox.slide-number
     }
   )
 
@@ -40,7 +38,7 @@
   doc
 }
 
-#let title-slide(title, subtitle, authors, date) = slide[
+#let title-slide(api, title, subtitle, authors, date) = (api.slide)[
   #set page(margin: 0pt, footer: none)
   #set align(horizon)
   #grid(
@@ -80,17 +78,17 @@
   )
 ]
 
-#let section-slide(name) = slide[
+#let section-slide(api, name) = (api.slide)[
   #set align(center + horizon)
-  #toolbox.register-section(name)
+  #(api.toolbox.register-section)(name)
   #text(size: 2em, weight: "bold", fill: accent1)[ #name ]
   #line(stroke: (thickness: .3em, paint: accent3, cap: "round"),
   length: 40%)
 ]
 
-#let toc-slide(toc_title) = slide[
+#let toc-slide(api, toc_title) = (api.slide)[
   #heading[ #toc_title ]
-  #toolbox.all-sections((sections, current) => {
+  #(api.toolbox.all-sections)((sections, current) => {
     enum(..sections)
   })
 ]

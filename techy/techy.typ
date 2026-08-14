@@ -1,6 +1,4 @@
 
-#import "@preview/polylux:0.4.0": *
-
 #let accent1 = rgb("#39FF14")
 #let accent2 = rgb("#00BFFF")
 #let accent3 = rgb("#FF2DA3")
@@ -8,7 +6,7 @@
 #let grid-color = color.mix((white, 90%), (accent1, 10%))
 #let title-font = "Orbitron"
 
-#let progress-bar = toolbox.progress-ratio(ratio => {
+#let progress-bar = (api) => (api.toolbox.progress-ratio)(ratio => {
   set grid.cell(inset: (y: 0.03em))
   grid(
     columns: (ratio * 100%, 1fr),
@@ -18,7 +16,7 @@
 })
 
 
-#let projector-theme(doc) = {
+#let projector-theme(api, doc) = {
 
   set text(fill: rgb("#111111"))
 
@@ -40,7 +38,7 @@
   doc
 }
 
-#let title-slide(title, subtitle, authors, date) = slide[
+#let title-slide(api, title, subtitle, authors, date) = (api.slide)[
   #set align(left + horizon)
   // Title text (large, bold)
   #text(font: title-font, size: 2em, weight: "bold")[
@@ -71,17 +69,17 @@
 ]
 
 
-#let toc-slide(toc_title) = slide[
+#let toc-slide(api, toc_title) = (api.slide)[
   // Title for the TOC page
   #heading(toc_title, level: 1)
 
-  #toolbox.all-sections((sections, current) => {
+  #(api.toolbox.all-sections)((sections, current) => {
     enum(..sections)
   })
 ]
 
 
-#let section-slide(name) = slide[
+#let section-slide(api, name) = (api.slide)[
   #set page(fill: accent1.darken(30%))
   #set text(fill: white)
 
@@ -89,6 +87,6 @@
   #text(font: title-font, size: 2.5em, weight: "semibold")[
     #name
   ]
-  #toolbox.register-section(name)  // register for TOC
-  #progress-bar
+  #(api.toolbox.register-section)(name)  // register for TOC
+  #progress-bar(api)
 ]

@@ -1,20 +1,18 @@
 // Metropolis theme for Projector (Quarto + Polylux)
 // Based on Matt Blackwell's cousteau
 
-#import "@preview/polylux:0.4.0": *
-
 #let cousteau-seablue  = rgb("#3498db")
 #let cousteau-shipgrey = rgb("#2c3e50")
 #let cousteau-skyblue  = rgb("#ecf0f1")
 #let cousteau-capred   = rgb("#e74c3c")
 #let cousteau-orange   = rgb("#e27520")
 
-#let projector-theme(doc) = {
+#let projector-theme(api, doc) = {
   // Set the default text and background colors
   set text(fill: black, weight: "light")
 
-  let slide-header = toolbox.next-heading(txt => {
-    show: toolbox.full-width-block.with(fill: cousteau-seablue, inset: 2em)
+  let slide-header = (api.toolbox.next-heading)(txt => {
+    show: (api.toolbox.full-width-block).with(fill: cousteau-seablue, inset: 2em)
     set align(horizon)
     set text(fill: cousteau-skyblue, size: 1.5em, weight: "semibold")
     txt
@@ -26,7 +24,7 @@
     footer: {
       set text(size: 0.6em)
       place(bottom + right, dy: -1em, dx: 5em)[
-        #toolbox.slide-number/#toolbox.last-slide-number
+        api.toolbox.slide-number/api.toolbox.last-slide-number
       ]
     }
   )
@@ -43,10 +41,8 @@
 }
 
 // required if setting any custom slide styles below:
-#import "@preview/polylux:0.4.0": *
-
-#let title-slide(title, subtitle, authors, date) = {
-  slide[
+#let title-slide(api, title, subtitle, authors, date) = {
+  (api.slide)[
     #set align(left + horizon)
 
     #if title != none {
@@ -85,8 +81,8 @@
   ]
 }
 
-#let toc-slide(toc_title) = {
-  slide[
+#let toc-slide(api, toc_title) = {
+  (api.slide)[
     #let title = if toc_title == none {
       auto
     } else {
@@ -94,20 +90,20 @@
     }
     #heading(toc_title)
     #text(size: 2em, fill: cousteau-seablue)[
-      #toolbox.all-sections((sections, current) => {
+      #(api.toolbox.all-sections)((sections, current) => {
         enum(..sections)
       })
     ]
   ]
 }
 
-#let section-slide(name) = {
-  slide[
+#let section-slide(api, name) = {
+  (api.slide)[
     #align(horizon)[
       #text(size: 2em, fill: cousteau-seablue)[
         #strong(name)
       ]
     ]
-    #toolbox.register-section(name)
+    #(api.toolbox.register-section)(name)
   ]
 }

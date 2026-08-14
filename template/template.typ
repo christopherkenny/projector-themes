@@ -1,7 +1,7 @@
 #let grey-gray = rgb("#dbdbdb")
 #let grey-dark-gray = rgb("#4a4a4a")
 
-#let projector-theme(doc) = {
+#let projector-theme(api, doc) = {
   // Set the default text and background colors
   set text(fill: grey-dark-gray)
   set page(fill: grey-gray)
@@ -14,10 +14,8 @@
 }
 
 // required if setting any custom slide styles below:
-#import "@preview/polylux:0.4.0": *
-
-#let title-slide(title, subtitle, authors, date) = {
-  slide[
+#let title-slide(api, title, subtitle, authors, date) = {
+  (api.slide)[
     #if title != none {
       align(center)[
         #block(inset: 1em)[
@@ -55,8 +53,8 @@
   ]
 }
 
-#let toc-slide(toc_title) = {
-  slide[
+#let toc-slide(api, toc_title) = {
+  (api.slide)[
     #let title = if toc_title == none {
       auto
     } else {
@@ -65,7 +63,7 @@
     #heading(toc_title)
     #set text(size: 2em)
     #align(horizon)[
-      #toolbox.all-sections((sections, current) => {
+      #(api.toolbox.all-sections)((sections, current) => {
         sections
         .map(s => if s == current { emph(s) } else { s })
         .join([ #linebreak() ])
@@ -74,13 +72,13 @@
   ]
 }
 
-#let section-slide(name) = {
-  slide[
+#let section-slide(api, name) = {
+  (api.slide)[
     #align(horizon)[
       #text(size: 4em)[
         #strong(name)
       ]
-      #toolbox.register-section(name)
+      #(api.toolbox.register-section)(name)
     ]
   ]
 }

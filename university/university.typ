@@ -1,5 +1,3 @@
-#import "@preview/polylux:0.4.0": *
-
 // Color palette inspired by the original university theme
 #let color-a = rgb("#0C6291")
 #let color-b = rgb("#A63446")
@@ -11,7 +9,7 @@
 #let short-title = none
 
 // Progress bar
-#let progress-bar = toolbox.progress-ratio( ratio => {
+#let progress-bar = (api) => (api.toolbox.progress-ratio)( ratio => {
   //set grid.cell(inset: (y: 0em))
   grid(
     columns: (ratio * 100%, 1fr),
@@ -21,12 +19,12 @@
   )
 })
 
-#let projector-theme = (doc) => {
+#let projector-theme = (api, doc) => {
 
-  let slide-header = toolbox.next-heading(txt => {
+  let slide-header = (api.toolbox.next-heading)(txt => {
     v(.1em)
     set align(horizon)
-    toolbox.full-width-block()[#progress-bar]
+    (api.toolbox.full-width-block)()[#progress-bar(api)]
     grid(
       columns: (60%, 1fr),
       align: (left, right),
@@ -34,14 +32,14 @@
         #txt
       ]),
       grid.cell(text(fill: color-b, size: 1.15em, weight: "semibold")[
-        #toolbox.current-section
+        api.toolbox.current-section
       ])
     )
   })
 
   let slide-footer = [
     #set align(bottom)
-    #toolbox.full-width-block(inset: 0pt)[
+    #(api.toolbox.full-width-block)(inset: 0pt)[
       //#set text(size: 0.8em)
       #set align(horizon)
       #grid(
@@ -51,7 +49,7 @@
         grid.cell(fill: color-a, stroke: color-a, short-author),
         grid.cell(fill: color-b, stroke: color-b, short-title),
         grid.cell(fill: color-b, stroke: color-b, short-date),
-        grid.cell(fill: color-b, stroke: color-b, align: center)[#toolbox.slide-number/#toolbox.last-slide-number]
+        grid.cell(fill: color-b, stroke: color-b, align: center)[api.toolbox.slide-number/api.toolbox.last-slide-number]
       )
     ]
   ]
@@ -72,7 +70,7 @@
   doc
 }
 
-#let title-slide(title, subtitle, authors, date) = slide[
+#let title-slide(api, title, subtitle, authors, date) = (api.slide)[
   #set page(footer: none)
   #set align(center + horizon)
 
@@ -104,17 +102,17 @@
 ]
 
 
-#let toc-slide(toc_title) = slide[
+#let toc-slide(api, toc_title) = (api.slide)[
   #set align(left + horizon)
   #text(size: 1.5em, weight: "bold", fill: color-a)[#toc_title]
   #v(0.8em)
-  #toolbox.all-sections((sections, current) => {
+  #(api.toolbox.all-sections)((sections, current) => {
     list(..sections)
   })
 ]
 
-#let section-slide(name) = slide[
-  #toolbox.register-section(name)
+#let section-slide(api, name) = (api.slide)[
+  #(api.toolbox.register-section)(name)
   #set align(left + horizon)
   #text(size: 1.75em, weight: "bold", fill: color-a)[#name]
   #rect(height: 1pt, width: 100%, fill: color-b)

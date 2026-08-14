@@ -1,20 +1,18 @@
 // Metropolis theme for Typst Polylux (Projector) – inspired by matze's Beamer Metropolis
 // Polylux port by Andreas Kröpelin & Enivex (MIT License)
 
-#import "@preview/polylux:0.4.0": *
-
 // Color palette (Metropolis defaults)
 #let bright = rgb("#eb811b") // primary accent (orange)
 #let brighter = rgb("#d6c6b7") // light variant of accent (unused here)
 #let header-color = rgb("#23373b") // dark header background (nearly black)
 
 // Theme setup function with default fonts and sizes:contentReference[oaicite:1]{index=1}
-#let projector-theme(doc) = {
+#let projector-theme(api, doc) = {
 
   set text(weight: "light")
 
-  let slide-title-header = toolbox.next-heading(h => {
-    show: toolbox.full-width-block.with(fill: text.fill, inset: 1em)
+  let slide-title-header = (api.toolbox.next-heading)(h => {
+    show: (api.toolbox.full-width-block).with(fill: text.fill, inset: 1em)
     set align(horizon)
     set text(fill: page.fill, size: 1.2em)
     strong(h)
@@ -27,7 +25,7 @@
       set text(size: 0.8em)
       set align(horizon)
       h(1fr)
-      toolbox.slide-number
+      api.toolbox.slide-number
     }
   )
 
@@ -54,7 +52,7 @@
 }
 
 // Title slide layout
-#let title-slide(title, subtitle, authors, date) = slide[
+#let title-slide(api, title, subtitle, authors, date) = (api.slide)[
   #set align(left + horizon)
   #text(size: 36pt, weight: "bold")[ #title ]
 
@@ -78,16 +76,16 @@
 ]
 
 // Table of contents slide – lists all sections
-#let toc-slide(toc_title) = slide[
+#let toc-slide(api, toc_title) = (api.slide)[
     // Title bar with “Agenda”
     #heading(toc_title, level: 1)
     // Enumerate all section titles (registered via section-slide)
-    #toolbox.all-sections((sections, current) => {
+    #(api.toolbox.all-sections)((sections, current) => {
       enum(..sections)
     })
 ]
 
-#let progress-bar = toolbox.progress-ratio( ratio => {
+#let progress-bar = (api) => (api.toolbox.progress-ratio)( ratio => {
   set grid.cell(inset: (y: .03em))
   grid(
     columns: (ratio * 100%, 1fr),
@@ -97,12 +95,12 @@
 })
 
 // Section break slide – large section title with accent rule
-#let section-slide(name) = slide[
+#let section-slide(api, name) = (api.slide)[
   #set align(horizon)
   #text(size: 2em)[
     #name
   ]
 
-  #toolbox.register-section(name)
-  #progress-bar
+  #(api.toolbox.register-section)(name)
+  #progress-bar(api)
 ]

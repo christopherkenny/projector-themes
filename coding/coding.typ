@@ -1,7 +1,5 @@
 // GitHub-Inspired Polylux Theme for projector
 
-#import "@preview/polylux:0.4.0": *
-
 // Color palette
 #let bg = rgb("ffffff")
 #let basecolor = rgb("#24292f")
@@ -10,7 +8,7 @@
 #let borders = rgb("#d0d7de")
 
 // Progress bar
-#let progress = toolbox.progress-ratio(ratio => {
+#let progress = (api) => (api.toolbox.progress-ratio)(ratio => {
   grid(
     columns: (ratio * 100%, 1fr),
     grid.cell(fill: accent)[],
@@ -18,19 +16,19 @@
   )
 })
 
-#let projector-theme = (doc) => {
+#let projector-theme = (api, doc) => {
   set page(
     paper: "presentation-16-9",
     margin: 2em,
     fill: bg,
-    footer: progress,
+    footer: progress(api),
   )
   set text(fill: basecolor, size: 1em)
   show raw: set text(fill: accent)
   doc
 }
 
-#let title-slide = (title, subtitle, authors, date) => slide[
+#let title-slide = (api, title, subtitle, authors, date) => (api.slide)[
   #set align(left + horizon)
   #text(size: 2em, weight: "bold")[#title]
   #rect(height: 1pt, width: 100%, fill: borders)
@@ -51,17 +49,17 @@
   }
 ]
 
-#let toc-slide = (toc_title) => slide[
+#let toc-slide = (api, toc_title) => (api.slide)[
   #set align(left + horizon)
   #text(size: 1.5em, weight: "bold")[#toc_title]
   #v(0.8em)
-  #toolbox.all-sections((sections, current) => {
+  #(api.toolbox.all-sections)((sections, current) => {
     enum(..sections)
   })
 ]
 
-#let section-slide = (name) => slide[
-  #toolbox.register-section(name)
+#let section-slide = (api, name) => (api.slide)[
+  #(api.toolbox.register-section)(name)
   #set align(left + horizon)
   #text(size: 1.75em, weight: "bold")[#name]
   #rect(height: 1pt, width: 100%, fill: borders)
