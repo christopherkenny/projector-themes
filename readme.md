@@ -16,27 +16,54 @@ Currently supported themes are listed below:
 | techy      | A bright, futuristic theme overusing monospace sans serif fonts |
 | university | A professional, academic theme allowing for two color accents based on [`polylux-typ/polylux`'s university theme](https://github.com/polylux-typ/polylux) |
 
-## Using a template
+## Using a packaged theme
 
-Each template comes with a pair of files necessary to use the theme.
-The `*.yaml` file contains settings to copy into the YAML front matter of your Quarto file.
-The `*.typ` file contains the theme and must be available at the path supplied to `theme`.
+Install the themes extension in an existing Quarto project with:
 
-For example, to use the `metropolis` theme, copy `metropolis/metropolis.typ`
-next to your `.qmd` file and merge the settings from `metropolis/metropolis.yaml`.
+```bash
+quarto add christopherkenny/projector-themes
+```
+
+Then add the filter and select a theme by name:
+
+```yaml
+format: projector-typst
+filters:
+  - projector-themes
+theme: metropolis
+```
+
+The filter maps the theme name to its bundled `.typ` file and supplies the theme's default Quarto options.
+Document-level options override those defaults.
+
+## Custom themes
+
+To make a private variant, copy a bundled `.typ` file into your project, edit
+it, and point `theme` at the copy:
+
+```yaml
+format: projector-typst
+theme: themes/my-university.typ
+```
+
+Custom file paths are resolved relative to the `.qmd` file and do not need to be added to `projector-themes.lua` or accompanied by a YAML file.
 
 ## Contributing a theme
 
-To contribute a theme, please submit a pull request.
-The `template` folder contains a template theme file.
-Each of these files should be edited to supply your theme.
+To contribute a theme to this collection, please submit a pull request.
+The `template` folder contains a starting point for a new theme.
 
-- `readme.md`: This should contain a short description of the theme. If there is any necessary attribution, please include details here.
-- `template.yaml`: This should set any YAML options to be used in Quarto.
-- `template.typ`: This should include any relevant Typst code to set up your theme. This includes copies of default definitions. Please remove those if you do not want to edit them.
-- `LICENSE`: This should contain any necessary license details. Notably, adopting themes from Tex or other Typst templates may require attribution in this. If possible, I recommend using the MIT-0 license for themes of this kind.
+For each theme, include:
 
-Then a thumbnail should be included. To create one:
+- `<theme>/readme.md`: a short description and any necessary attribution details.
+- `_extensions/projector-themes/themes/<theme>.typ`: the Typst code for the theme. This may include copies of default definitions; remove those if you do not want to edit them.
+- `<theme>/LICENSE`: any necessary licensing details. Adapting themes from TeX or other Typst templates may require attribution. If possible, use the MIT-0 license for themes of this kind.
+
+Also register the theme's name and defaults in `projector-themes.lua`.
+
+Then a thumbnail should be included.
+
+To create one:
 
 1. Render the `template.qmd` with your theme.
 2. Create a png with dpi = 150 version of the first six slides in the order:
@@ -71,9 +98,7 @@ generate_thumbnail <- function(theme, pdf_file = 'template.pdf', dpi = 150) {
 
 ```
 
-
-
-### Details of the `.yaml` file
+### Theme defaults
 
 `projector` includes several custom arguments that can be supplied in the YAML header.
 
@@ -86,10 +111,10 @@ generate_thumbnail <- function(theme, pdf_file = 'template.pdf', dpi = 150) {
 - `toc`: whether to display the table of contents
 - `toc-title`: title of the table of contents
 - `background-image`: the path to an image to put as the background
-- `theme`: a file name containing your customizations
+- `theme`: a bundled theme name or a file name containing your customizations
 
-These arguments take precedence over any settings in the `.typ` file.
-All `.yaml` files should contain a `theme` argument at a minimum.
+The filter stores each theme's defaults in `projector-themes.lua` and only
+fills in options that are not already present in the document.
 
 ### Details of the `.typ` file
 
@@ -105,10 +130,10 @@ In Typst syntax, the style will be applied as follows:
 #show: projector-theme.with(api)
 ```
 
-If `theme` is set in the YAML, this line will be run so it must include a definition for `projector-theme(api, doc)`.
+The filter supplies the `theme` path, so the file must include a definition for `projector-theme(api, doc)`.
 
-Further, all YAML options are applied *after* the theme file is used.
-As such, if you want to edit things controlled by the YAML, such as the font, you *must* do this via the YAML, not by the `.typ` file.
+Further, all Quarto format options are applied *after* the theme file is used.
+As such, if you want to edit things controlled by Quarto, such as the font, you *must* do this via the YAML, not by the `.typ` file.
 Later definitions take precedence, so you will see no changes, but it will *silently* change nothing, as the code is still valid.
 
 To modify the title, TOC, or section slides, you need to adjust them in your template file.

@@ -38,12 +38,13 @@
   doc
 }
 
-#let title-slide(api, title, subtitle, authors, date) = (api.slide)[
-  #set page(margin: 0pt, footer: none)
+#let title-slide(api, title, subtitle, authors, date) = {
+  set page(margin: 0pt, footer: none)
+  (api.slide)[
   #set align(horizon)
   #grid(
     columns: (1fr, 2fr),
-    rows: (100%,),
+    rows: (1fr,),
     gutter: 1em,
     grid.cell(
       inset: (top: 2em, bottom: 1em, left: .5em),
@@ -76,7 +77,8 @@
       }
     ]
   )
-]
+  ]
+}
 
 #let section-slide(api, name) = (api.slide)[
   #set align(center + horizon)

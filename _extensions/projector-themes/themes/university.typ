@@ -70,8 +70,9 @@
   doc
 }
 
-#let title-slide(api, title, subtitle, authors, date) = (api.slide)[
-  #set page(footer: none)
+#let title-slide(api, title, subtitle, authors, date) = {
+  set page(footer: none)
+  (api.slide)[
   #set align(center + horizon)
 
   #v(1fr)
@@ -99,7 +100,8 @@
     text(size: 0.9em, fill: color-b)[#date]
   }
   #v(1fr)
-]
+  ]
+}
 
 
 #let toc-slide(api, toc_title) = (api.slide)[
